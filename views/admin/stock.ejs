@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blood Stock - Admin</title>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="card shadow-lg mb-4 border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="/images/blood.png" alt="Red blood drop icon representing blood stock in a healthcare setting, conveying urgency and care" class="img-fluid rounded-4 me-3" style="max-height:60px;">
+                    <h2 class="fw-bold" style="color:#e63946;">Blood Stock</h2>
+                </div>
+                <div class="mb-3 text-end">
+                    <a href="/addStock" class="btn btn-success rounded-pill">Add New Stock</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Blood Group</th>
+                                <th>Units Available</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% stock.forEach(function(item) { %>
+                        <tr>
+                            <td><span class="badge bg-danger"><%= item.bloodGroup %></span></td>
+                            <td><%= item.units %></td>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

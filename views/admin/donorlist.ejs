@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donor List - Admin</title>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="card shadow-lg mb-4 border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="/images/blood-donation.png" alt="Person donating blood in a medical setting with supportive staff and equipment, conveying a caring and hopeful atmosphere" class="img-fluid rounded-4 me-3" style="max-height:60px;">
+                    <h2 class="fw-bold" style="color:#e63946;">Donor List</h2>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Blood Group</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Donated At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% donors.forEach(function(donor) { %>
+                        <tr>
+                            <td><%= donor.name %></td>
+                            <td><%= donor.age %></td>
+                            <td><%= donor.gender %></td>
+                            <td><span class="badge bg-danger"><%= donor.bloodGroup %></span></td>
+                            <td><%= donor.contact %></td>
+                            <td><%= donor.email %></td>
+                            <td><%= donor.address %></td>
+                            <td><%= donor.donatedAT.toDateString() %></td>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Donor - Blood Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height:100vh;">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+                    <div class="row g-0">
+                        <div class="col-md-5 d-flex align-items-center justify-content-center p-4">
+                            <img src="/images/blood-donation.png" alt="Person donating blood in a medical setting with a nurse assisting, surrounded by medical equipment and a calm supportive atmosphere" class="img-fluid rounded-4" style="max-height:220px;">
+                        </div>
+                        <div class="col-md-7 p-4">
+                            <h2 class="mb-4 text-center fw-bold" style="color:#e63946;">Donor Registration</h2>
+                            <form action="/donorForm" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label">Name:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-person"></i></span>
+                                        <input type="text" name="name" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Age:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-calendar"></i></span>
+                                        <input type="number" name="age" min="18" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Gender:</label>
+                                    <select name="gender" class="form-select rounded-pill" required>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Blood Group:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-droplet"></i></span>
+                                        <input type="text" name="bloodGroup" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contact:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-telephone"></i></span>
+                                        <input type="text" name="contact" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-envelope"></i></span>
+                                        <input type="email" name="email" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Address:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-geo-alt"></i></span>
+                                        <input type="text" name="address" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Donated At:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-clock"></i></span>
+                                        <input type="date" name="donatedAT" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-danger w-100 rounded-pill fw-bold py-2">Register as Donor</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

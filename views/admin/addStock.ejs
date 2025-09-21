@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Blood Stock - Admin</title>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center align-items-center" style="min-height:60vh;">
+            <div class="col-md-7">
+                <div class="card shadow-lg border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+                    <div class="row g-0">
+                        <div class="col-md-5 d-flex align-items-center justify-content-center p-4">
+                            <img src="/images/blood.png" alt="Add Stock" class="img-fluid rounded-4" style="max-height:120px;">
+                        </div>
+                        <div class="col-md-7 p-4">
+                            <h2 class="mb-4 text-center fw-bold" style="color:#e63946;">Add Blood Stock</h2>
+                            <form action="/admin/stock" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label">Blood Group:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-droplet"></i></span>
+                                        <input type="text" name="bloodGroup" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Units:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-plus-circle"></i></span>
+                                        <input type="number" name="units" min="1" class="form-control rounded-end" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-danger w-100 rounded-pill fw-bold py-2">Add Stock</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

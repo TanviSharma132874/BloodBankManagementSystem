@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipient List - Admin</title>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="card shadow-lg mb-4 border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="/images/heart-img.png" alt="Red heart symbol representing patient care and compassion, placed beside the Patient List heading in a hospital admin dashboard, conveying a warm and supportive atmosphere" class="img-fluid rounded-4 me-3" style="max-height:60px;">
+                    <h2 class="fw-bold" style="color:#e63946;">Patient List</h2>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Blood Group Needed</th>
+                                <th>Units Needed</th>
+                                <th>Contact</th>
+                                <th>Hospital</th>
+                                <th>Requested At</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% recipients.forEach(function(recipient) { %>
+                        <tr>
+                            <td><%= recipient.name %></td>
+                            <td><%= recipient.age %></td>
+                            <td><%= recipient.gender %></td>
+                            <td><span class="badge bg-danger"><%= recipient.bloodGroupNeeded %></span></td>
+                            <td><%= recipient.unitsNeeded %></td>
+                            <td><%= recipient.contact %></td>
+                            <td><%= recipient.hospital %></td>
+                            <td><%= recipient.requestedAt ? recipient.requestedAt.toDateString() : '' %></td>
+                            <td>
+                                <% if (recipient.status === 'pending') { %>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                <% } else if (recipient.status === 'approved') { %>
+                                    <span class="badge bg-success">Approved</span>
+                                <% } else if (recipient.status === 'rejected') { %>
+                                    <span class="badge bg-danger">Rejected</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
