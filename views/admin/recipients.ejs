@@ -1,59 +1,393 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Recipient List - Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f1faee 0%, #e63946 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Header with animated background */
+        .header-section {
+            background: linear-gradient(135deg, #e63946 0%, #f1faee 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(230, 57, 70, 0.2);
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 40%;
+            height: 200%;
+            background: url('/images/heart-img.png') no-repeat center;
+            background-size: 120px;
+            opacity: 0.15;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.1); opacity: 0.25; }
+        }
+        
+        /* Patient Cards */  
+        .patients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .patient-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #e63946;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .patient-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(230, 57, 70, 0.15);
+        }
+        
+        .patient-card.urgent {
+            border-left-color: #dc3545;
+            animation: urgentPulse 2s infinite;
+        }
+        
+        @keyframes urgentPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+            50% { box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3); }
+        }
+        
+        .patient-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .patient-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e63946, #dc3545);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .patient-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+        
+        .patient-details {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            animation: statusGlow 3s infinite;
+        }
+        
+        @keyframes statusGlow {
+            0%, 100% { box-shadow: none; }
+            50% { box-shadow: 0 0 15px rgba(var(--badge-color), 0.5); }
+        }
+        
+        .status-pending {
+            background: linear-gradient(135deg, #ffc107, #ffca2c);
+            color: #000;
+            --badge-color: 255, 193, 7;
+        }
+        
+        .status-approved {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            --badge-color: 40, 167, 69;
+        }
+        
+        .status-rejected {
+            background: linear-gradient(135deg, #dc3545, #e63946);
+            color: white;
+            --badge-color: 220, 53, 69;
+        }
+        
+        .blood-need-section {
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            border: 2px dashed #e63946;
+        }
+        
+        .blood-group-needed {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 5px;
+        }
+        
+        .units-needed {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .patient-info {
+            margin: 15px 0;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+        
+        .info-icon {
+            width: 35px;
+            color: #e63946;
+            font-size: 1.1rem;
+        }
+        
+        .info-text {
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .urgency-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        
+        .urgent-high { background: #dc3545; }
+        .urgent-medium { background: #ffc107; }
+        .urgent-low { background: #28a745; }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e63946;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container py-5">
-        <div class="card shadow-lg mb-4 border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-4">
-                    <img src="/images/heart-img.png" alt="Red heart symbol representing patient care and compassion, placed beside the Patient List heading in a hospital admin dashboard, conveying a warm and supportive atmosphere" class="img-fluid rounded-4 me-3" style="max-height:60px;">
-                    <h2 class="fw-bold" style="color:#e63946;">Patient List</h2>
+    <div class="container py-4">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="bi bi-heart-pulse-fill me-3"></i>
+                        Patient Management
+                    </h1>
+                    <p class="lead mb-0">Monitor and manage blood requests from patients</p>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover align-middle">
-                        <thead class="table-danger">
-                            <tr>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>Gender</th>
-                                <th>Blood Group Needed</th>
-                                <th>Units Needed</th>
-                                <th>Contact</th>
-                                <th>Hospital</th>
-                                <th>Requested At</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <% recipients.forEach(function(recipient) { %>
-                        <tr>
-                            <td><%= recipient.name %></td>
-                            <td><%= recipient.age %></td>
-                            <td><%= recipient.gender %></td>
-                            <td><span class="badge bg-danger"><%= recipient.bloodGroupNeeded %></span></td>
-                            <td><%= recipient.unitsNeeded %></td>
-                            <td><%= recipient.contact %></td>
-                            <td><%= recipient.hospital %></td>
-                            <td><%= recipient.requestedAt ? recipient.requestedAt.toDateString() : '' %></td>
-                            <td>
-                                <% if (recipient.status === 'pending') { %>
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                <% } else if (recipient.status === 'approved') { %>
-                                    <span class="badge bg-success">Approved</span>
-                                <% } else if (recipient.status === 'rejected') { %>
-                                    <span class="badge bg-danger">Rejected</span>
-                                <% } %>
-                            </td>
-                        </tr>
-                        <% }) %>
-                        </tbody>
-                    </table>
+                <div class="col-md-4 text-end">
+                    <img src="/images/14870481.png" alt="Medical care" class="img-fluid" style="max-height: 120px; filter: brightness(0) invert(1);">
                 </div>
             </div>
         </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="bi bi-people-fill text-primary fs-2 mb-2"></i>
+                <div class="stat-number"><%= recipients.length %></div>
+                <div class="stat-label">Total Patients</div>
+            </div>
+            <div class="stat-card">
+                <i class="bi bi-clock-fill text-warning fs-2 mb-2"></i>
+                <div class="stat-number"><%= recipients.filter(r => r.status === 'pending').length %></div>
+                <div class="stat-label">Pending Requests</div>
+            </div>
+            <div class="stat-card">
+                <i class="bi bi-check-circle-fill text-success fs-2 mb-2"></i>
+                <div class="stat-number"><%= recipients.filter(r => r.status === 'approved').length %></div>
+                <div class="stat-label">Approved</div>
+            </div>
+            <div class="stat-card">
+                <i class="bi bi-droplet-fill text-danger fs-2 mb-2"></i>
+                <div class="stat-number"><%= recipients.reduce((sum, r) => sum + parseInt(r.unitsNeeded || 0), 0) %></div>
+                <div class="stat-label">Total Units Needed</div>
+            </div>
+        </div>
+
+        <!-- Patients Grid -->
+        <% if (recipients.length > 0) { %>
+        <div class="patients-grid">
+            <% recipients.forEach(function(recipient) { 
+                let urgencyClass = recipient.unitsNeeded > 5 ? 'urgent' : '';
+                let urgencyIndicator = recipient.unitsNeeded > 5 ? 'urgent-high' : (recipient.unitsNeeded > 2 ? 'urgent-medium' : 'urgent-low');
+                let statusClass = recipient.status === 'pending' ? 'status-pending' : (recipient.status === 'approved' ? 'status-approved' : 'status-rejected');
+            %>
+            <div class="patient-card <%= urgencyClass %>">
+                <div class="urgency-indicator <%= urgencyIndicator %>"></div>
+                
+                <div class="patient-header">
+                    <div class="d-flex align-items-center">
+                        <div class="patient-avatar">
+                            <%= recipient.name.charAt(0).toUpperCase() %>
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="patient-name"><%= recipient.name %></h5>
+                            <div class="patient-details">
+                                <i class="bi bi-person-fill me-1"></i>
+                                <%= recipient.gender %>, <%= recipient.age %> years
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status-badge <%= statusClass %>">
+                        <% if (recipient.status === 'pending') { %>
+                            <i class="bi bi-clock-fill me-1"></i>Pending
+                        <% } else if (recipient.status === 'approved') { %>
+                            <i class="bi bi-check-circle-fill me-1"></i>Approved
+                        <% } else { %>
+                            <i class="bi bi-x-circle-fill me-1"></i>Rejected
+                        <% } %>
+                    </div>
+                </div>
+                
+                <div class="blood-need-section">
+                    <div class="blood-group-needed">
+                        <i class="bi bi-droplet-fill me-2"></i>
+                        <%= recipient.bloodGroupNeeded %>
+                    </div>
+                    <div class="units-needed">
+                        <%= recipient.unitsNeeded %> Units Required
+                    </div>
+                </div>
+                
+                <div class="patient-info">
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
+                        <div class="info-text"><%= recipient.contact %></div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-hospital-fill"></i>
+                        </div>
+                        <div class="info-text"><%= recipient.hospital %></div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="info-icon">
+                            <i class="bi bi-calendar-event-fill"></i>
+                        </div>
+                        <div class="info-text">
+                            <%= recipient.requestedAt ? recipient.requestedAt.toDateString() : 'Not specified' %>
+                        </div>
+                    </div>
+                </div>
+                
+                <% if (recipient.status === 'pending') { %>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-success flex-fill rounded-pill" onclick="updateStatus('<%= recipient._id %>', 'approved')">
+                        <i class="bi bi-check-lg me-1"></i>Approve
+                    </button>
+                    <button class="btn btn-danger flex-fill rounded-pill" onclick="updateStatus('<%= recipient._id %>', 'rejected')">
+                        <i class="bi bi-x-lg me-1"></i>Reject
+                    </button>
+                </div>
+                <% } %>
+            </div>
+            <% }) %>
+        </div>
+        <% } else { %>
+        <div class="text-center py-5">
+            <i class="bi bi-people text-muted" style="font-size: 4rem;"></i>
+            <h4 class="mt-3 text-muted">No Patients Found</h4>
+            <p class="text-muted">There are currently no patient requests in the system.</p>
+        </div>
+        <% } %>
     </div>
+
+    <script>
+        function updateStatus(id, status) {
+            // Add your status update logic here
+            console.log('Updating patient', id, 'to status', status);
+            // You can implement AJAX call to update status
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
