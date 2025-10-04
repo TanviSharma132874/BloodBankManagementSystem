@@ -15,22 +15,18 @@ A full-stack web application to manage blood donors, recipients, and stock effic
 - Bootstrap
 - HTML, CSS, JavaScript
   ## Screenshots:-
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/da9752cd-dec7-4893-95b2-cddd9bab0324" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/bdbdac1b-9152-41c7-8025-88620e20c178" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/772bb9d8-c814-4eec-8cd3-4bede60fe780" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/17fe387c-80e9-4f0d-8a6d-33610b540c1a" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/b9b3765e-86ee-4c34-a4b3-25d41ce00029" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/8ce7dd56-c841-4d16-b915-c9d6b32b310a" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/3c3cb40b-7a67-4510-9e6f-7cee5573e267" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/4114e54c-6ac7-489f-86ec-a07b031728d5" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/cc9a5e1a-ed28-4fdb-b1fe-ef362e3fc59c" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/5e62c2b1-5707-44cf-a639-2d4b01a8d39c" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/cae7a994-9e01-495f-b24a-b2cacffd5264" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/bce21d6e-7713-4e65-9e6a-8ff9109fe58e" />
-  <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/880de3ad-e44c-409e-8e19-c60b6c56a82a" />
-  <img width="1920" height="2002" alt="screencapture-localhost-2007-admin-upcoming-camps-2025-10-04-17_56_59" src="https://github.com/user-attachments/assets/f43ca8d2-6b72-49ca-972e-27740e24adb8" />
-  <img width="1920" height="912" alt="screencapture-localhost-2007-admin-logout-2025-10-04-17_57_49" src="https://github.com/user-attachments/assets/d847e58d-6645-4f1b-a9ca-3b3050ddf1de" />
-
+ <img width="1920" height="996" alt="screencapture-localhost-2007-2025-10-04-17_34_15" src="https://github.com/user-attachments/assets/a1d5dcc0-34c5-476c-93a8-f0b770118b4d" />
+ <img width="1920" height="912" alt="screencapture-localhost-2007-login-2025-10-04-17_46_16" src="https://github.com/user-attachments/assets/24dee15d-73bf-4458-b9d0-eaa215d41722" />
+ <img width="1920" height="2217" alt="screencapture-localhost-2007-home-2025-10-04-17_47_05" src="https://github.com/user-attachments/assets/c8f35ee3-66c5-498e-8455-0ae9ff54b09e" />
+ <img width="1920" height="998" alt="screencapture-localhost-2007-donorForm-2025-10-04-17_48_36" src="https://github.com/user-attachments/assets/39b7cbbd-6e1b-48c9-8906-6a96f39306df" />
+ <img width="1920" height="1800" alt="screencapture-localhost-2007-home-2025-10-04-17_49_21" src="https://github.com/user-attachments/assets/88ffeb86-5c07-479b-8fc6-c684c248aae6" />
+ <img width="1920" height="962" alt="screencapture-localhost-2007-requestForm-2025-10-04-17_50_41" src="https://github.com/user-attachments/assets/3df1678e-7738-422b-94b2-87d9da010abb" />
+ <img width="1920" height="1183" alt="screencapture-localhost-2007-adminDashboard-2025-10-04-17_52_04" src="https://github.com/user-attachments/assets/79a59d13-17e5-41f9-8eec-c0c872187b9e" />
+ <img width="1920" height="4106" alt="screencapture-localhost-2007-admin-donors-2025-10-04-17_52_47" src="https://github.com/user-attachments/assets/f3ddf41e-ce9f-4972-9def-328bd7ccb8e5" />
+ <img width="1920" height="1810" alt="screencapture-localhost-2007-admin-stock-2025-10-04-17_53_31" src="https://github.com/user-attachments/assets/9c9e69f1-dcbd-4d38-a41d-87a5eaec353a" />
+<img width="1920" height="4732" alt="screencapture-localhost-2007-admin-recipients-2025-10-04-17_54_20" src="https://github.com/user-attachments/assets/a7718c17-721a-482b-aebf-e53a41ed9c7c" />
+<img width="1920" height="1643" alt="screencapture-localhost-2007-admin-requests-68e11144425561005945e162-approve-2025-10-04-17_55_23" src="https://github.com/user-attachments/assets/8f287747-8dea-41da-aab2-fbdf0d5b7a5c" />
+<img width="1920" height="4732" alt="screencapture-localhost-2007-admin-recipients-2025-10-04-17_56_14" src="https://github.com/user-attachments/assets/0f7f1b95-795a-4de9-b2e9-c0267a3fa090" />
 
 
 
