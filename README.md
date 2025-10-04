@@ -28,6 +28,11 @@ A full-stack web application to manage blood donors, recipients, and stock effic
   <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/cae7a994-9e01-495f-b24a-b2cacffd5264" />
   <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/bce21d6e-7713-4e65-9e6a-8ff9109fe58e" />
   <img width="959" height="980" alt="image" src="https://github.com/user-attachments/assets/880de3ad-e44c-409e-8e19-c60b6c56a82a" />
+  <img width="1920" height="2002" alt="screencapture-localhost-2007-admin-upcoming-camps-2025-10-04-17_56_59" src="https://github.com/user-attachments/assets/f43ca8d2-6b72-49ca-972e-27740e24adb8" />
+  <img width="1920" height="912" alt="screencapture-localhost-2007-admin-logout-2025-10-04-17_57_49" src="https://github.com/user-attachments/assets/d847e58d-6645-4f1b-a9ca-3b3050ddf1de" />
+
+
+
 
 
 
