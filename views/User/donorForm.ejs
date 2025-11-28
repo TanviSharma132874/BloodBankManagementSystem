@@ -6,83 +6,416 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become a Donor - Blood Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        
+        .donor-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .form-section {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .image-section {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-title {
+            color: #2c3e50;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-group-text {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            border: none;
+            color: white;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 0 12px 12px 0;
+            padding: 12px 16px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #e63946;
+            box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
+            background: white;
+        }
+        
+        .form-select {
+            border-radius: 12px;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .form-select:focus {
+            border-color: #e63946;
+        }
+        
+        .btn-donor {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+        }
+        
+        .btn-donor:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(230, 57, 70, 0.4);
+            background: linear-gradient(135deg, #d32535 0%, #c41e29 100%);
+        }
+        
+        .image-section h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .image-section p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .feature-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list i {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .blood-drops {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .drop {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: fall 8s infinite linear;
+        }
+        
+        .drop:nth-child(1) {
+            width: 20px;
+            height: 25px;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .drop:nth-child(2) {
+            width: 15px;
+            height: 20px;
+            left: 70%;
+            animation-delay: 2s;
+        }
+        
+        .drop:nth-child(3) {
+            width: 25px;
+            height: 30px;
+            left: 50%;
+            animation-delay: 4s;
+        }
+        
+        .drop:nth-child(4) {
+            width: 18px;
+            height: 23px;
+            left: 80%;
+            animation-delay: 6s;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px));
+                opacity: 0;
+            }
+        }
+        
+        .hero-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .donor-container {
+                margin: 20px;
+            }
+            
+            .form-section {
+                padding: 40px 20px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light d-flex align-items-center justify-content-center" style="min-height:100vh;">
-    <div class="container">
-        <div class="row justify-content-center align-items-center" style="min-height:100vh;">
-            <div class="col-md-8">
-                <div class="card shadow-lg border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-lg-11 col-xl-10">
+                <div class="donor-container">
                     <div class="row g-0">
-                        <div class="col-md-5 d-flex align-items-center justify-content-center p-4">
-                            <img src="/images/blood-donation.png" alt="Person donating blood in a medical setting with a nurse assisting, surrounded by medical equipment and a calm supportive atmosphere" class="img-fluid rounded-4" style="max-height:220px;">
+                        <!-- Image/Info Section -->
+                        <div class="col-lg-5">
+                            <div class="image-section">
+                                <div class="blood-drops">
+                                    <div class="drop"></div>
+                                    <div class="drop"></div>
+                                    <div class="drop"></div>
+                                    <div class="drop"></div>
+                                </div>
+                                
+                                <div class="hero-icon">
+                                    <i class="bi bi-heart-fill"></i>
+                                </div>
+                                
+                                <h3>Become a Life Saver</h3>
+                                <p>Join thousands of heroes who donate blood and save lives every day. Your single donation can save up to three lives.</p>
+                                
+                                <ul class="feature-list">
+                                    <li>
+                                        <i class="bi bi-shield-check"></i>
+                                        Safe & Professional Process
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-clock"></i>
+                                        Quick 15-Minute Donation
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-people"></i>
+                                        Join Donor Community
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-gift"></i>
+                                        Health Check Benefits
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-md-7 p-4">
-                            <h2 class="mb-4 text-center fw-bold" style="color:#e63946;">Donor Registration</h2>
-                            <form action="/donorForm" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Name:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-person"></i></span>
-                                        <input type="text" name="name" class="form-control rounded-end" required>
+                        
+                        <!-- Form Section -->
+                        <div class="col-lg-7">
+                            <div class="form-section">
+                                <h2 class="form-title">Donor Registration</h2>
+                                <p class="form-subtitle">Complete the form below to become a registered blood donor</p>
+                                
+                                <form action="/donorForm" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </span>
+                                                <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Age</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar-date"></i>
+                                                </span>
+                                                <input type="number" name="age" min="18" max="65" class="form-control" placeholder="18-65 years" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Age:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-calendar"></i></span>
-                                        <input type="number" name="age" min="18" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Gender</label>
+                                            <select name="gender" class="form-select" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Blood Group</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-droplet-fill"></i>
+                                                </span>
+                                                <input type="text" name="bloodGroup" class="form-control" placeholder="e.g., A+, B-, O+" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Gender:</label>
-                                    <select name="gender" class="form-select rounded-pill" required>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Blood Group:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-droplet"></i></span>
-                                        <input type="text" name="bloodGroup" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Contact Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-telephone-fill"></i>
+                                                </span>
+                                                <input type="tel" name="contact" class="form-control" placeholder="Your phone number" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-envelope-fill"></i>
+                                                </span>
+                                                <input type="email" name="email" class="form-control" placeholder="your.email@example.com" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Contact:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-telephone"></i></span>
-                                        <input type="text" name="contact" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Complete Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                            </span>
+                                            <input type="text" name="address" class="form-control" placeholder="Your complete address" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Email:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Last Donation Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-calendar-heart"></i>
+                                            </span>
+                                            <input type="date" name="donatedAT" class="form-control" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Address:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-geo-alt"></i></span>
-                                        <input type="text" name="address" class="form-control rounded-end" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Donated At:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-clock"></i></span>
-                                        <input type="date" name="donatedAT" class="form-control rounded-end" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-danger w-100 rounded-pill fw-bold py-2">Register as Donor</button>
-                            </form>
+                                    
+                                    <button type="submit" class="btn btn-danger btn-donor w-100">
+                                        <i class="bi bi-heart-fill me-2"></i>
+                                        Register as Blood Donor
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
