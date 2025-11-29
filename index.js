@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const port = 2007;
+// UPDATED FOR RAILWAY
+const port = process.env.PORT || 2007;
 
 const app = express();
 app.use(express.static('public'));
@@ -12,16 +13,25 @@ const Donor = require('./model/Donor');
 const Recipient = require('./model/Recipient');
 const Stock = require('./model/stock');
 const User = require('./model/user');
+const Camp = require('./model/Camp');
 
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req,res)=>{
-    res.render('User/register');
+app.get('/', async (req, res) => {
+    const upcomingCamps = await Camp.find({ 
+        status: 'upcoming', 
+        date: { $gte: new Date() } 
+    }).sort({ date: 1 }).limit(3);
+    res.render('User/register', { upcomingCamps });
 });
-app.get('/register', (req, res) => {
-    res.render('User/register');
+app.get('/register', async (req, res) => {
+    const upcomingCamps = await Camp.find({ 
+        status: 'upcoming', 
+        date: { $gte: new Date() } 
+    }).sort({ date: 1 }).limit(3);
+    res.render('User/register', { upcomingCamps });
 });
 app.post('/register', async (req, res) => {
     const { name, email, password, role } = req.body;
@@ -29,8 +39,12 @@ app.post('/register', async (req, res) => {
     await user.save();
     res.redirect('/login');
 });
-app.get('/login', (req, res)=>{
-    res.render('User/login');
+app.get('/login', async (req, res) => {
+    const upcomingCamps = await Camp.find({ 
+        status: 'upcoming', 
+        date: { $gte: new Date() } 
+    }).sort({ date: 1 }).limit(3);
+    res.render('User/login', { upcomingCamps });
 });
 
 app.post('/login', async (req, res)=>{
@@ -91,8 +105,6 @@ app.post('/request', async (req, res) => {
     res.redirect('/home');
 });
 
-
-
 // Admin Login
 app.get('/adminLogin', (req, res) => {
     res.render('admin/login');
@@ -112,11 +124,11 @@ app.get('/adminDashboard', async (req, res) => {
     const donors = await Donor.find({});
     const recipients = await Recipient.find({});
     const stock = await Stock.find({});
+    const camps = await Camp.find({ status: 'upcoming', date: { $gte: new Date() } });
     const totalDonors = donors.length;
     const availableUnits = stock.reduce((sum, item) => sum + (item.units || 0), 0);
     const pendingRequests = await Recipient.countDocuments({ status: 'pending' });
-    // For demo, upcoming camps is static. You can make it dynamic if you add a Camp model.
-    const upcomingCamps = 3;
+    const upcomingCamps = camps.length;
     res.render('admin/dashboard', { donors, recipients, stock, totalDonors, availableUnits, pendingRequests, upcomingCamps });
 });
 // Recipients List (Admin)
@@ -193,7 +205,6 @@ app.post('/admin/requests/:id/approve', async (req, res) => {
     } else {
         message = 'Request is not pending or does not exist.';
     }
-    // Pass message to requests page
     const requests = await Recipient.find({});
     res.render('admin/requests', { requests, message });
 });
@@ -218,7 +229,6 @@ app.get('/home', async (req, res) => {
     const userId = req.query.userId;
     if (userId) {
         const user = await User.findById(userId);
-        // Find requests by user email (assuming email is unique)
         const requests = await Recipient.find({ email: user.email });
         res.render('User/home', { user, requests });
     } else {
@@ -234,6 +244,49 @@ app.post('/admin/logout', (req, res) => {
     res.render('admin/logout');
 });
 
+// Camp Management Routes
+app.get('/admin/camps', async (req, res) => {
+    const camps = await Camp.find({}).sort({ date: 1 });
+    res.render('admin/camps', { camps });
+});
+
+// Add camp form
+app.get('/admin/camps/add', (req, res) => {
+    res.render('admin/addCamp');
+});
+
+// Create new camp
+app.post('/admin/camps', async (req, res) => {
+    const { name, location, date, time, organizer, contact, description } = req.body;
+    const camp = new Camp({ name, location, date, time, organizer, contact, description });
+    await camp.save();
+    res.redirect('/admin/camps');
+});
+
+// Delete camp
+app.post('/admin/camps/:id/delete', async (req, res) => {
+    await Camp.findByIdAndDelete(req.params.id);
+    res.redirect('/admin/camps');
+});
+
+// Add sample camps
+app.get('/admin/camps/sample', async (req, res) => {
+    const sampleCamps = [
+        { name: 'City Hospital Blood Drive', location: 'City Hospital, Main St', date: new Date(Date.now() + 7*86400000), time: '9AM-4PM', organizer: 'City Hospital', contact: '+1-555-0123', description: 'Annual drive' },
+        { name: 'Community Center Camp', location: 'Community Center', date: new Date(Date.now() + 14*86400000), time: '10AM-3PM', organizer: 'Red Cross', contact: '+1-555-0456', description: 'Donation drive' }
+    ];
+    
+    await Camp.insertMany(sampleCamps);
+    res.redirect('/admin/camps');
+});
+
+// View upcoming camps
+app.get('/admin/upcoming-camps', async (req, res) => {
+    const upcomingCamps = await Camp.find({ status: 'upcoming', date: { $gte: new Date() } }).sort({ date: 1 });
+    res.render('admin/upcomingCamps', { upcomingCamps });
+});
+
+// UPDATED FOR RAILWAY
 app.listen(port, () => {
     console.log('Server started at Port:' + port);
 });

@@ -6,76 +6,432 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Blood - Blood Bank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        
+        .request-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            max-width: 950px;
+            width: 100%;
+        }
+        
+        .form-section {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .image-section {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-title {
+            color: #2c3e50;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .form-subtitle {
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .input-group-text {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            border: none;
+            color: white;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px 0 0 12px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 0 12px 12px 0;
+            padding: 12px 16px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #e63946;
+            box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
+            background: white;
+        }
+        
+        .form-select {
+            border-radius: 12px;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .form-select:focus {
+            border-color: #e63946;
+        }
+        
+        .btn-request {
+            background: linear-gradient(135deg, #e63946 0%, #d32535 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);
+        }
+        
+        .btn-request:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(230, 57, 70, 0.4);
+            background: linear-gradient(135deg, #d32535 0%, #c41e29 100%);
+        }
+        
+        .image-section h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .image-section p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .feature-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list i {
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .pulse-heart {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 30px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        .heart:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .heart:nth-child(2) {
+            top: 60%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+        
+        .heart:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+        
+        .heart:nth-child(4) {
+            top: 40%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+        }
+        
+        .hero-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .request-container {
+                margin: 20px;
+            }
+            
+            .form-section {
+                padding: 40px 20px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .urgency-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .urgent {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .critical {
+            background: #ff3838;
+            color: white;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
+        }
+    </style>
 </head>
-<body class="bg-light d-flex align-items-center justify-content-center" style="min-height:100vh;">
-    <div class="container">
-        <div class="row justify-content-center align-items-center" style="min-height:100vh;">
-            <div class="col-md-8">
-                <div class="card shadow-lg border-0" style="background: linear-gradient(120deg, #f1faee 60%, #e63946 100%);">
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-lg-11 col-xl-9">
+                <div class="request-container">
                     <div class="row g-0">
-                        <div class="col-md-5 d-flex align-items-center justify-content-center p-4">
-                            <img src="/images/heart-img.png" alt="Red heart symbol with a drop of blood in the center, set against a soft gradient background, conveying hope and care in a medical context" class="img-fluid rounded-4" style="max-height:220px;">
+                        <!-- Image/Info Section -->
+                        <div class="col-lg-5">
+                            <div class="image-section">
+                                <div class="pulse-heart">
+                                    <div class="heart"><i class="bi bi-heart-fill"></i></div>
+                                    <div class="heart"><i class="bi bi-heart-fill"></i></div>
+                                    <div class="heart"><i class="bi bi-heart-fill"></i></div>
+                                    <div class="heart"><i class="bi bi-heart-fill"></i></div>
+                                </div>
+                                
+                                <div class="hero-icon">
+                                    <i class="bi bi-shield-heart"></i>
+                                </div>
+                                
+                                <h3>Emergency Blood Request</h3>
+                                <p>Submit your blood request and we'll connect you with available donors. Every second counts in saving lives.</p>
+                                
+                                <ul class="feature-list">
+                                    <li>
+                                        <i class="bi bi-lightning-charge"></i>
+                                        Fast Response Time
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-geo-alt"></i>
+                                        Local Donor Network
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-telephone"></i>
+                                        24/7 Support Available
+                                    </li>
+                                    <li>
+                                        <i class="bi bi-check-circle"></i>
+                                        Verified Blood Supply
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-md-7 p-4">
-                            <h2 class="mb-4 text-center fw-bold" style="color:#e63946;">Request Blood</h2>
-                            <form action="/requestForm" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Name:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-person"></i></span>
-                                        <input type="text" name="name" class="form-control rounded-end" required>
+                        
+                        <!-- Form Section -->
+                        <div class="col-lg-7">
+                            <div class="form-section">
+                                <h2 class="form-title">Blood Request Form</h2>
+                                <p class="form-subtitle">Fill out the form below to submit your blood request</p>
+                                
+                                <form action="/requestForm" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Patient Name</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </span>
+                                                <input type="text" name="name" class="form-control" placeholder="Patient's full name" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Age</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-calendar-date"></i>
+                                                </span>
+                                                <input type="number" name="age" min="1" max="120" class="form-control" placeholder="Patient's age" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Age:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-calendar"></i></span>
-                                        <input type="number" name="age" min="1" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Gender</label>
+                                            <select name="gender" class="form-select" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Blood Group Needed <span class="urgent urgency-badge">URGENT</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-droplet-fill"></i>
+                                                </span>
+                                                <input type="text" name="bloodGroupNeeded" class="form-control" placeholder="e.g., A+, B-, O+" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Gender:</label>
-                                    <select name="gender" class="form-select rounded-pill" required>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Blood Group Needed:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-droplet"></i></span>
-                                        <input type="text" name="bloodGroupNeeded" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Units Needed</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-plus-circle-fill"></i>
+                                                </span>
+                                                <input type="number" name="unitsNeeded" min="1" max="10" class="form-control" placeholder="Number of units" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="form-label">Contact Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="bi bi-telephone-fill"></i>
+                                                </span>
+                                                <input type="tel" name="contact" class="form-control" placeholder="Emergency contact number" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Units Needed:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-plus-circle"></i></span>
-                                        <input type="number" name="unitsNeeded" min="1" class="form-control rounded-end" required>
+                                    
+                                    <div class="form-group">
+                                        <label class="form-label">Hospital/Medical Facility</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-hospital-fill"></i>
+                                            </span>
+                                            <input type="text" name="hospital" class="form-control" placeholder="Hospital name and address" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Contact:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-telephone"></i></span>
-                                        <input type="text" name="contact" class="form-control rounded-end" required>
+                                    
+                                    <button type="submit" class="btn btn-danger btn-request w-100">
+                                        <i class="bi bi-send-fill me-2"></i>
+                                        Submit Blood Request
+                                    </button>
+                                    
+                                    <div class="text-center mt-3">
+                                        <small class="text-muted">
+                                            <i class="bi bi-info-circle me-1"></i>
+                                            Our team will contact you within 15 minutes of request submission
+                                        </small>
                                     </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Hospital:</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white"><i class="bi bi-hospital"></i></span>
-                                        <input type="text" name="hospital" class="form-control rounded-end" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-danger w-100 rounded-pill fw-bold py-2">Request</button>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
