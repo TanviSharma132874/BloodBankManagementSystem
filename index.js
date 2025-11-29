@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+// UPDATED FOR RAILWAY
 const port = process.env.PORT || 2007;
 
 const app = express();
@@ -104,8 +105,6 @@ app.post('/request', async (req, res) => {
     res.redirect('/home');
 });
 
-
-
 // Admin Login
 app.get('/adminLogin', (req, res) => {
     res.render('admin/login');
@@ -206,7 +205,6 @@ app.post('/admin/requests/:id/approve', async (req, res) => {
     } else {
         message = 'Request is not pending or does not exist.';
     }
-    // Pass message to requests page
     const requests = await Recipient.find({});
     res.render('admin/requests', { requests, message });
 });
@@ -231,7 +229,6 @@ app.get('/home', async (req, res) => {
     const userId = req.query.userId;
     if (userId) {
         const user = await User.findById(userId);
-        // Find requests by user email (assuming email is unique)
         const requests = await Recipient.find({ email: user.email });
         res.render('User/home', { user, requests });
     } else {
@@ -248,18 +245,17 @@ app.post('/admin/logout', (req, res) => {
 });
 
 // Camp Management Routes
-// View all camps (Admin)
 app.get('/admin/camps', async (req, res) => {
     const camps = await Camp.find({}).sort({ date: 1 });
     res.render('admin/camps', { camps });
 });
 
-// Add camp form (Admin)
+// Add camp form
 app.get('/admin/camps/add', (req, res) => {
     res.render('admin/addCamp');
 });
 
-// Create new camp (Admin)
+// Create new camp
 app.post('/admin/camps', async (req, res) => {
     const { name, location, date, time, organizer, contact, description } = req.body;
     const camp = new Camp({ name, location, date, time, organizer, contact, description });
@@ -267,57 +263,30 @@ app.post('/admin/camps', async (req, res) => {
     res.redirect('/admin/camps');
 });
 
-// Delete camp (Admin)
+// Delete camp
 app.post('/admin/camps/:id/delete', async (req, res) => {
     await Camp.findByIdAndDelete(req.params.id);
     res.redirect('/admin/camps');
 });
 
-// Add sample camps for testing
+// Add sample camps
 app.get('/admin/camps/sample', async (req, res) => {
     const sampleCamps = [
-        {
-            name: 'City Hospital Blood Drive',
-            location: 'City Hospital, Main Street',
-            date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-            time: '9:00 AM - 4:00 PM',
-            organizer: 'City Hospital',
-            contact: '+1-555-0123',
-            description: 'Annual blood donation camp to help patients in need.'
-        },
-        {
-            name: 'Community Center Blood Camp',
-            location: 'Community Center, Park Avenue',
-            date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
-            time: '10:00 AM - 3:00 PM',
-            organizer: 'Red Cross Society',
-            contact: '+1-555-0456',
-            description: 'Community blood donation drive for local hospitals.'
-        },
-        {
-            name: 'University Blood Donation Drive',
-            location: 'State University Campus',
-            date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000), // 21 days from now
-            time: '8:00 AM - 5:00 PM',
-            organizer: 'Student Health Services',
-            contact: '+1-555-0789',
-            description: 'Student-organized blood donation drive for the community.'
-        }
+        { name: 'City Hospital Blood Drive', location: 'City Hospital, Main St', date: new Date(Date.now() + 7*86400000), time: '9AM-4PM', organizer: 'City Hospital', contact: '+1-555-0123', description: 'Annual drive' },
+        { name: 'Community Center Camp', location: 'Community Center', date: new Date(Date.now() + 14*86400000), time: '10AM-3PM', organizer: 'Red Cross', contact: '+1-555-0456', description: 'Donation drive' }
     ];
     
     await Camp.insertMany(sampleCamps);
     res.redirect('/admin/camps');
 });
 
-// View upcoming camps with details (Admin)
+// View upcoming camps
 app.get('/admin/upcoming-camps', async (req, res) => {
-    const upcomingCamps = await Camp.find({ 
-        status: 'upcoming', 
-        date: { $gte: new Date() } 
-    }).sort({ date: 1 });
+    const upcomingCamps = await Camp.find({ status: 'upcoming', date: { $gte: new Date() } }).sort({ date: 1 });
     res.render('admin/upcomingCamps', { upcomingCamps });
 });
 
+// UPDATED FOR RAILWAY
 app.listen(port, () => {
     console.log('Server started at Port:' + port);
 });
