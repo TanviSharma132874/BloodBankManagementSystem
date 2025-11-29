@@ -1,8 +1,21 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/BBMS");
+
+// Use MongoDB URI from Railway environment variable
+const uri = process.env.MONGO_URI;
+
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
 const db = mongoose.connection;
-db.on('connected',()=>{
+
+db.on('connected', () => {
     console.log("Database connected successfully");
-})
+});
+
+db.on('error', (err) => {
+    console.log("MongoDB connection error: " + err);
+});
 
 module.exports = db;
